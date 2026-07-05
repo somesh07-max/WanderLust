@@ -1,0 +1,48 @@
+body{
+    background-color: #fafafa;
+}
+
+.custom-navbar{
+    background: rgba(255,255,255,0.9);
+    backdrop-filter: blur(10px);
+    border-bottom: 1px solid #eeeeee;
+    padding: 0.9rem 0;
+}
+
+.brand-logo{
+    font-size: 1.5rem;
+    font-weight: 700;
+    text-decoration: none;
+    color: #ff385c !important;
+    letter-spacing: -0.5px;
+}
+
+.brand-logo i{
+    margin-right: 6px;
+}
+
+.nav-item-custom{
+    color: #444 !important;
+    font-weight: 500;
+    transition: all 0.2s ease;
+}
+
+.nav-item-custom:hover{
+    color: #000 !important;
+}
+
+.add-listing-btn{
+    background-color: #ff385c;
+    color: white;
+    border-radius: 999px;
+    padding: 0.55rem 1.2rem;
+    font-weight: 600;
+    border: none;
+    transition: all 0.25s ease;
+}
+
+.add-listing-btn:hover{
+    background-color: #e61e4d;
+    color: white;
+    transform: translateY(-1px);
+}
