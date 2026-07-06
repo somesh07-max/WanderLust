@@ -6,10 +6,23 @@ const posts = require("./Routes/post.js");
 const cookieParser = require("cookie-parser")
 
 
-app.use(cookieParse());
+app.use(cookieParser("secretcode"));
 app.use("/users",users) 
 app.use("/posts",posts)  //it will match withh all the users routes 
 
+
+app.get("/getSignedCookie",(req,res)=>{
+    res.cookie("color","red",{signed:true});
+    res.send("signed cookies send");
+})
+app.get("/verified",(req,res)=>{
+    console.log(res.cookie);
+    res.send("verified");
+})
+app.get("/greet",(req,res)=>{
+    let {name}=req.cookies;
+    res.send(`hi , ${name}`);
+})
 
 app.get("/getcookies",(req,res)=>{
     res.cookie("greet","namaste");
