@@ -9,6 +9,8 @@ const {ListingSchema} = require("./schema.js");
 const {ReviewSchema}=require("./schema.js")
 const Review = require("./models/review.js")
 const Listing = require("./models/Listing.js")
+const session = require("express-session");
+const flash = require("connect-flash");
 app.set("view engine","ejs");
 app.set("views",path.join(__dirname,"views"));
 app.use(express.urlencoded({ extended: true }));
@@ -40,8 +42,25 @@ main().then((res)=>{
     console.log("connections successful");
 }).catch(err => console.log(err));
 
+const sessionOptions = {
+    secret:"mysupersectret",
+    resave:false , 
+saveUninitialized:true,
+cookie:{
+    expires:Date.now()+7*24*60*60*10000,
+    maxAge:7*24*60*60*10000,
+    httpOnly:true,
+}};
+
+app.use(session(sessionOptions));
+app.use(flash())
 
 
+app.use((req, res, next) => {
+    res.locals.success = req.flash("success");
+    console.log(res.locals.success);
+    next();
+});
 app.use("/Listings",listing)
 app.use("/Listings/:id/reviews",review)
 
@@ -52,8 +71,9 @@ app.use("/Listings/:id/reviews",review)
 
 
 // if user search for the route which does not exist
-app.use((req,res,next)=>{
-    next(new ExpressError(404,"Page not found"));
+app.use((req, res, next) => {
+    console.log("404 Request:", req.method, req.originalUrl);
+    next(new ExpressError(404, "Page not found"));
 });
 
 app.use((err, req, res, next) => {
@@ -64,6 +84,7 @@ app.use((err, req, res, next) => {
     // res.status(status).send(message);
     res.status(status).render("error.ejs",{err});
 });
+
 
 
 
