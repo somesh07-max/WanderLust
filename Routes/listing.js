@@ -50,6 +50,11 @@ router.post("/",validateListing, WrapAsync(async (req, res) => {
 router.get("/:id/edit", WrapAsync(async (req,res)=>{
     let {id} = req.params;
     let list= await Listing.findById(id);
+    if (!list) {
+        req.flash("error", "Listing does not exist!!");
+        return res.redirect("/Listings");
+    }
+
     res.render("Listings/edit.ejs",{list});
 }))
 
