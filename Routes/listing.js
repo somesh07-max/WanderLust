@@ -29,9 +29,15 @@ router.get("/", WrapAsync(async (req,res)=>{
 }))
 
 
-// 
+//  new route 
 router.get("/new",(req,res)=>{
+    console.log(req.user);
+    if(!req.isAuthenticated()){
+        req.flash("error","YOU are not Logged in");
+       return  res.redirect("/login");
+    }
     res.render("Listings/new.ejs");
+    
 })
 
 router.post("/",validateListing, WrapAsync(async (req, res) => {
